@@ -54,13 +54,13 @@ public class Sistema {
                     int codigoAlterar = scr.nextInt();
                     System.out.print("Novo valor da diária: ");
                     double novoValor = scr.nextDouble();
-                    boolean alterado = false;
-                    for (Veiculo v : veiculos) {
-                        if (v.getCodigo() == codigoAlterar) {
-                            alterado = v.alterarValorDiaria(novoValor);
-                        }
+                    Veiculo veiculoAlterar = buscarPorCodigo(veiculos, codigoAlterar);
+                    if (veiculoAlterar == null) {
+                        System.out.println("Veículo não encontrado!");
+                    } else {
+                        boolean alterado = veiculoAlterar.alterarValorDiaria(novoValor);
+                        System.out.println(alterado ? "o Valor da diaria foi alterado!" : "Valor não alterado! Verifique as informações");
                     }
-                    System.out.println(alterado ? "o Valor da diaria foi alterado!" : "Valor não alterado! Verifique as informações");
                     break;
                 case 3:
                     if (veiculos.isEmpty()) {
@@ -78,12 +78,7 @@ public class Sistema {
                     System.out.println("1 - Alugar Veiculo");
                     System.out.println("2 - Devolver Veiculo");
                     int acao = scr.nextInt();
-                    Veiculo alvoAluguel = null;
-                    for (Veiculo v : veiculos) {
-                        if (v.getCodigo() == codAluguel) {
-                            alvoAluguel = v;
-                        }
-                    }
+                    Veiculo alvoAluguel = buscarPorCodigo(veiculos, codAluguel);
                     if (alvoAluguel == null) {
                         System.out.println("Veículo não encontrado!");
                     } else if (acao == 1) {
@@ -96,19 +91,14 @@ public class Sistema {
                     break;
                 case 5:
                     System.out.print("Código do veículo: ");
-                    int codOrcamento = scr.nextInt();
+                    int codigoOrcamento = scr.nextInt();
                     System.out.print("Quantidade de dias: ");
                     int dias = scr.nextInt();
-                    Veiculo alvoOrcamento = null;
-                    for (Veiculo v : veiculos) {
-                        if (v.getCodigo() == codOrcamento) {
-                            alvoOrcamento = v;
-                        }
-                    }
+                    Veiculo alvoOrcamento = buscarPorCodigo(veiculos, codigoOrcamento);
                     if (alvoOrcamento == null) {
                         System.out.println("Veículo não encontrado!");
                     } else {
-                        System.out.printf("Orçamento: R$ %.2f", alvoOrcamento.calcularValor(dias));
+                        System.out.printf("Orçamento: R$ %.2f \n", alvoOrcamento.calcularValor(dias));
                     }
                     break;
                 case 6:
